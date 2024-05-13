@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import databaseConnection from './src/config/connectdatabase'
 import UserRoute from "./src/routes/User.Routes";
-import NoteRoute from "./src/routes/Recipes.Routes";
+import RecipeRoute from "./src/routes/Recipes.Routes";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDatabaseMongo from './src/config/connectMongoDB';
@@ -20,7 +20,7 @@ const options = {
         version: '1.0.0',
       },
     },
-    apis: ['src/routes/Note.Routes.ts', 'src/routes/User.Routes.ts'],
+    apis: ['src/routes/Recipes.Routes.ts', 'src/routes/User.Routes.ts'],
   };
   
   const swaggerDocs = swaggerJsdoc(options);
@@ -49,7 +49,7 @@ const initializeServer = async () => {
     app.use(express.json());
     
     app.use('/users', UserRoute)
-    app.use('/notes', NoteRoute)
+    app.use('/recipes', RecipeRoute)
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
     

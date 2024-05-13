@@ -38,7 +38,7 @@ export async function getRecipebyId(req: Request, res: Response) {
     console.log(recipes)
     return res.json(recipes);
   } catch (error) {
-    return res.status(500).json({ message: "Erreur lors de la récupération notes" });
+    return res.status(500).json({ message: "Erreur lors de la récupération recipes" });
   }
 }
 
@@ -84,7 +84,7 @@ export async function createRecipe(req: Request, res: Response) {
     return res.status(201).json(recipes);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la création de la note" });
+    return res.status(500).json({ message: "Erreur lors de la création de la recipes" });
   }
 }
 
@@ -101,14 +101,14 @@ export async function deleteById(req: Request, res: Response) {
     const recipes = await recipesRepository.findOne({ id: parseInt(id) });
 
     if (!recipes) {
-      return res.status(404).json({ message: "Note non trouvée" });
+      return res.status(404).json({ message: "Recipe non trouvée" });
     }
 
     await em.removeAndFlush(recipes);
-    return res.status(200).json({ message: "Note supprimée avec succès" });
+    return res.status(200).json({ message: "Recipe supprimée avec succès" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la suppression de la note" });
+    return res.status(500).json({ message: "Erreur lors de la suppression de la Recipe" });
   }
 }
 
@@ -120,12 +120,12 @@ export async function updateRecipe(req: Request, res: Response) {
   const em = mikro.em.fork();
 
   try {
-    const noteRepository = em.getRepository(Recipes);
+    const recipeRepository = em.getRepository(Recipes);
 
-    const recipes = await noteRepository.findOne({ id: parseInt(id) });
+    const recipes = await recipeRepository.findOne({ id: parseInt(id) });
 
     if (!recipes) {
-      return res.status(404).json({ message: "Note non trouvée" });
+      return res.status(404).json({ message: "Recipe non trouvée" });
     }
 
     recipes.title = title;
@@ -133,9 +133,9 @@ export async function updateRecipe(req: Request, res: Response) {
 
     await em.persistAndFlush(recipes);
 
-    return res.status(200).json({ message: "Note modifiée avec succès" });
+    return res.status(200).json({ message: "Recipe modifiée avec succès" });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: "Erreur lors de la modification de la note" });
+    return res.status(500).json({ message: "Erreur lors de la modification de la Recipe" });
   }
 }

@@ -14,5 +14,5 @@ export class UserAccount {
   password!: string;
 
   @OneToMany(() => Recipes, recipes => recipes.UserAccount)
-  notes = new Collection<Recipes>(this);
+  recipes = new Collection<Recipes>(this);
 }
