@@ -1,5 +1,5 @@
 import { Entity, PrimaryKey, Property, OneToMany, Collection, Unique } from '@mikro-orm/postgresql';
-import { Note } from './Note.model';
+import { Recipes } from './Recipes.model';
 
 @Entity()
 export class UserAccount {
@@ -13,6 +13,6 @@ export class UserAccount {
   @Property()
   password!: string;
 
-  @OneToMany(() => Note, note => note.UserAccount)
-  notes = new Collection<Note>(this);
+  @OneToMany(() => Recipes, recipes => recipes.UserAccount)
+  notes = new Collection<Recipes>(this);
 }

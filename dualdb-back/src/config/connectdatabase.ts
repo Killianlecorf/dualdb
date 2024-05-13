@@ -1,6 +1,6 @@
 import { MikroORM } from '@mikro-orm/postgresql';
 import { UserAccount } from '../models/User.model';
-import { Note } from '../models/Note.model';
+import { Note } from '../models/Recipes.model';
 
 async function databaseConnection() {
     const orm = await MikroORM.init({

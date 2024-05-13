@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import { Note } from '../models/Note.model';
+import { Recipes } from '../models/Recipes.model';
 import { UserAccount } from '../models/User.model';
 import { orm } from "../../index";
 import jwt from 'jsonwebtoken';
 
-export async function getNotes(req: Request, res: Response) {
+export async function getRecipes(req: Request, res: Response) {
   const mikro = await orm;
   const em = mikro.em.fork();
 
@@ -18,10 +18,10 @@ export async function getNotes(req: Request, res: Response) {
   try {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET) as { userId: number };
     userId = decodedToken.userId;
-    const noteRepository = em.getRepository(Note);
+    const recipesRepository = em.getRepository(Recipes);
 
-    const notes = await noteRepository.find({ UserAccount : userId });
-    return res.json(notes);
+    const recipes = await recipesRepository.find({ UserAccount : userId });
+    return res.json(recipes);
   } catch (error) {
     console.error(error);
     return res.status(401).json({ message: "Token invalide" });
@@ -32,11 +32,11 @@ export async function getNotebyId(req: Request, res: Response) {
   const mikro = await orm;
   const em = mikro.em.fork();
   try {
-    const noteRepository = em.getRepository(Note);
+    const recipesRepository = em.getRepository(Recipes);
     const { id } = req.params;
-    const note = await noteRepository.findOne({ id: parseInt(id) });
-    console.log(note)
-    return res.json(note);
+    const recipes = await recipesRepository.findOne({ id: parseInt(id) });
+    console.log(recipes)
+    return res.json(recipes);
   } catch (error) {
     return res.status(500).json({ message: "Erreur lors de la récupération notes" });
   }
@@ -75,13 +75,13 @@ export async function createNote(req: Request, res: Response) {
       return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
 
-    const note = new Note();
-    note.title = title;
-    note.content = content;
-    note.UserAccount = user;
+    const recipes = new Recipes();
+    recipes.title = title;
+    recipes.content = content;
+    recipes.UserAccount = user;
 
-    await em.persistAndFlush(note);
-    return res.status(201).json(note);
+    await em.persistAndFlush(recipes);
+    return res.status(201).json(recipes);
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Erreur lors de la création de la note" });
@@ -96,15 +96,15 @@ export async function deleteById(req: Request, res: Response) {
   const em = mikro.em.fork();
 
   try {
-    const noteRepository = em.getRepository(Note);
+    const recipesRepository = em.getRepository(Recipes);
     
-    const note = await noteRepository.findOne({ id: parseInt(id) });
+    const recipes = await recipesRepository.findOne({ id: parseInt(id) });
 
-    if (!note) {
+    if (!recipes) {
       return res.status(404).json({ message: "Note non trouvée" });
     }
 
-    await em.removeAndFlush(note);
+    await em.removeAndFlush(recipes);
     return res.status(200).json({ message: "Note supprimée avec succès" });
   } catch (error) {
     console.error(error);
@@ -120,18 +120,18 @@ export async function updateNote(req: Request, res: Response) {
   const em = mikro.em.fork();
 
   try {
-    const noteRepository = em.getRepository(Note);
+    const noteRepository = em.getRepository(Recipes);
 
-    const note = await noteRepository.findOne({ id: parseInt(id) });
+    const recipes = await noteRepository.findOne({ id: parseInt(id) });
 
-    if (!note) {
+    if (!recipes) {
       return res.status(404).json({ message: "Note non trouvée" });
     }
 
-    note.title = title;
-    note.content = content;
+    recipes.title = title;
+    recipes.content = content;
 
-    await em.persistAndFlush(note);
+    await em.persistAndFlush(recipes);
 
     return res.status(200).json({ message: "Note modifiée avec succès" });
   } catch (error) {

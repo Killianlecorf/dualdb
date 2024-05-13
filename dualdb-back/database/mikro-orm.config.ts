@@ -1,7 +1,7 @@
 import { defineConfig } from '@mikro-orm/postgresql';
 import { Migrator } from '@mikro-orm/migrations';
 import { UserAccount } from '../src/models/User.model';
-import { Note } from '../src/models/Note.model';
+import { Note } from '../src/models/Recipes.model';
 import { config } from 'dotenv';
 
 config({

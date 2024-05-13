@@ -1,8 +1,8 @@
-import { Entity, PrimaryKey, Property, ManyToOne, Collection } from '@mikro-orm/postgresql';
+import { Entity, PrimaryKey, Property, ManyToOne} from '@mikro-orm/postgresql';
 import { UserAccount } from './User.model';
 
 @Entity()
-export class Note {
+export class Recipes {
   @PrimaryKey({autoincrement: true})
   id!: number;
 
