@@ -101,11 +101,11 @@
           "mappedType": "integer"
         }
       },
-      "name": "note",
+      "name": "recipes",
       "schema": "public",
       "indexes": [
         {
-          "keyName": "note_pkey",
+          "keyName": "recipes_pkey",
           "columnNames": [
             "id"
           ],
@@ -117,12 +117,12 @@
       ],
       "checks": [],
       "foreignKeys": {
-        "note_user_account_id_foreign": {
-          "constraintName": "note_user_account_id_foreign",
+        "recipes_user_account_id_foreign": {
+          "constraintName": "recipes_user_account_id_foreign",
           "columnNames": [
             "user_account_id"
           ],
-          "localTableName": "public.note",
+          "localTableName": "public.recipes",
           "referencedColumnNames": [
             "id"
           ],

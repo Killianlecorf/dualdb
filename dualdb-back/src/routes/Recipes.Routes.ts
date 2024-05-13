@@ -1,14 +1,14 @@
 import express from 'express';
-import { getNotes, getNotebyId, createNote, deleteById, updateNote } from '../controllers/Note.controller';
+import { getRecipes, getRecipebyId, createRecipe, deleteById, updateRecipe } from '../controllers/Recipes.controller';
 import { verifyToken } from '../middleware/verificationToken.middleware';
 
 const router = express.Router();
 
-router.get('/', verifyToken, getNotes);
-router.get('/:id', verifyToken, getNotebyId);
-router.post('/', verifyToken, createNote);
+router.get('/', verifyToken, getRecipes);
+router.get('/:id', verifyToken, getRecipebyId);
+router.post('/', verifyToken, createRecipe);
 router.delete('/:id', verifyToken, deleteById);
-router.put('/:id', verifyToken, updateNote);
+router.put('/:id', verifyToken, updateRecipe);
 
 /**
  * @openapi

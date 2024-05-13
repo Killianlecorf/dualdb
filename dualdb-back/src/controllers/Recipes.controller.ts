@@ -28,7 +28,7 @@ export async function getRecipes(req: Request, res: Response) {
   }
 }
 
-export async function getNotebyId(req: Request, res: Response) {
+export async function getRecipebyId(req: Request, res: Response) {
   const mikro = await orm;
   const em = mikro.em.fork();
   try {
@@ -42,7 +42,7 @@ export async function getNotebyId(req: Request, res: Response) {
   }
 }
 
-export async function createNote(req: Request, res: Response) {
+export async function createRecipe(req: Request, res: Response) {
   const { title, content } = req.body;
   
   if (!req.cookies || !req.cookies.jwt) {
@@ -112,7 +112,7 @@ export async function deleteById(req: Request, res: Response) {
   }
 }
 
-export async function updateNote(req: Request, res: Response) {
+export async function updateRecipe(req: Request, res: Response) {
   const id = req.params.id;
   const { title, content } = req.body;
 

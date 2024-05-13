@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import databaseConnection from './src/config/connectdatabase'
 import UserRoute from "./src/routes/User.Routes";
-import NoteRoute from "./src/routes/Note.Routes";
+import NoteRoute from "./src/routes/Recipes.Routes";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDatabaseMongo from './src/config/connectMongoDB';
