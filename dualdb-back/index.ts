@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import databaseConnection from './src/config/connectdatabase';
-import RecipeRoute from "./src/routes/Recipes.Routes";
+import RecipePostgresRoute from "./src/routes/Recipes.Routes";
+import RecipeMongoRoute from "./src/routes/mongoDB/Recipes.Routes";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connectDatabaseMongo from './src/config/connectMongoDB';
@@ -47,7 +48,8 @@ const initializeServer = async () => {
     
     app.use(express.json());
     
-    app.use('/recipes', RecipeRoute)
+    app.use('/postgres/recipes', RecipePostgresRoute)
+    app.use('/mongodb/recipes', RecipeMongoRoute)
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 
     
