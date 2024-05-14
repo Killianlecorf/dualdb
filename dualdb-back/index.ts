@@ -1,8 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import databaseConnection from './src/config/connectdatabase'
-import UserRoute from "./src/routes/User.Routes";
+import databaseConnection from './src/config/connectdatabase';
 import RecipeRoute from "./src/routes/Recipes.Routes";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -48,7 +47,6 @@ const initializeServer = async () => {
     
     app.use(express.json());
     
-    app.use('/users', UserRoute)
     app.use('/recipes', RecipeRoute)
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 

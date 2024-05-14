@@ -1,5 +1,4 @@
-import { Entity, PrimaryKey, Property, ManyToOne} from '@mikro-orm/postgresql';
-import { UserAccount } from './User.model';
+import { Entity, PrimaryKey, Property} from '@mikro-orm/postgresql';
 
 @Entity()
 export class Recipes {
@@ -10,8 +9,8 @@ export class Recipes {
   title!: string;
 
   @Property()
-  content!: string;
+  ingredients!: string;
 
-  @ManyToOne(() => UserAccount)
-  UserAccount!: UserAccount;
+  @Property()
+  preparationStep!: string;
 }
