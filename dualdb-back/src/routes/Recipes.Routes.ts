@@ -53,15 +53,15 @@ router.get('/:id', getRecipebyId);
  *           type: integer
  *         title:
  *           type: string
- *         content:
+ *         ingredients:
  *           type: string
- *         userId:
- *           type: integer
+ *         preparationStep:
+ *           type: string
  *       required:
  *         - id
  *         - title
- *         - content
- *         - userId
+ *         - ingredients
+ *         - preparationStep
  */
 
 export default router;
