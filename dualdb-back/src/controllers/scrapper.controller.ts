@@ -9,9 +9,9 @@ interface RecipeDetails {
 }
 
 async function scrapper(): Promise<void> {
-  const url = "https://www.allrecipes.com/recipes/17561/lunch/";
+  const URL = "https://www.allrecipes.com/recipes/17561/lunch/";
   try {
-    const response = await fetch(url);
+    const response = await fetch(URL);
     const body = await response.text();
     const document = new JSDOM(body).window.document;
 
@@ -22,9 +22,9 @@ async function scrapper(): Promise<void> {
     });
 
     const tasks: Promise<RecipeDetails | null>[] = recipeUrls.map(link => scrapeRecipeDetails(link));
-    const scrappedPages = await Promise.all(tasks);
+    const Pages = await Promise.all(tasks);
 
-    fs.writeFile('data.json', JSON.stringify(scrappedPages), (err) => {
+    fs.writeFile('data.json', JSON.stringify(Pages), (err) => {
       if (err) {
         console.error("Erreur lors de l'écriture du fichier :", err);
       } else {
@@ -46,12 +46,12 @@ async function scrapeRecipeDetails(recipeUrl: string): Promise<RecipeDetails | n
     const titleElement = document.querySelector("h1");
     const title = titleElement ? titleElement.textContent?.trim() || "Titre non trouvé" : "Titre non trouvé";
 
-    const ingredientsElements = document.querySelectorAll("span[data-ingredient-name='true']");
-    const ingredients = Array.from(ingredientsElements).map(ingredientElement => ingredientElement.textContent?.trim() || '');
+    const ingredientsRecipes = document.querySelectorAll("span[data-ingredient-name='true']");
+    const ingredients = Array.from(ingredientsRecipes).map(ingredientRecipe => ingredientRecipe.textContent?.trim() || '');
 
     // Étapes de préparation de la recette
-    const stepsElements = document.querySelectorAll("div.recipe__steps-content ol li p");
-    const preparationStep = Array.from(stepsElements).map(stepElement => stepElement.textContent?.trim() || '');
+    const stepsRecipes = document.querySelectorAll("div.recipe__steps-content ol li p");
+    const preparationStep = Array.from(stepsRecipes).map(stepRecipe => stepRecipe.textContent?.trim() || '');
 
     const recipeDetails: RecipeDetails = {
       title,
@@ -68,8 +68,8 @@ async function scrapeRecipeDetails(recipeUrl: string): Promise<RecipeDetails | n
 
 async function read(): Promise<void> {
   try {
-    const jsonData = fs.readFileSync('data.json', 'utf8');
-    const data = JSON.parse(jsonData);
+    const jsonFile = fs.readFileSync('data.json', 'utf8');
+    const data = JSON.parse(jsonFile);
     return console.log(data);
   } catch (error) {
     console.error('An error occurred while reading JSON:', error);
@@ -78,8 +78,8 @@ async function read(): Promise<void> {
 
 async function populate(): Promise<void> {
   try {
-    const recipesData = fs.readFileSync('data.json', 'utf8');
-    const recipes = JSON.parse(recipesData);
+    const dataRecipes = fs.readFileSync('data.json', 'utf8');
+    const recipes = JSON.parse(dataRecipes);
     await Recipe.insertMany(recipes);
     console.log('Base de données peuplée avec succès !');
   } catch (error) {
