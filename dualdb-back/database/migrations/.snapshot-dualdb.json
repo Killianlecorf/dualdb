@@ -26,21 +26,21 @@
         },
         "ingredients": {
           "name": "ingredients",
-          "type": "varchar(255)",
+          "type": "jsonb",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "mappedType": "json"
         },
         "preparation_step": {
           "name": "preparation_step",
-          "type": "varchar(255)",
+          "type": "jsonb",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
           "nullable": false,
-          "mappedType": "string"
+          "mappedType": "json"
         }
       },
       "name": "recipes",

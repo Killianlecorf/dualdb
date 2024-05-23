@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import databaseConnection from './src/config/connectdatabase';
 import RecipePostgresRoute from "./src/routes/Recipes.Routes";
-import ScrapperRoute from "./src/routes/scrapper.Routes";
+import ScrapperRoute from "./src/routes/Scrapper.Routes";
 import RecipeMongoRoute from "./src/routes/mongoDB/Recipes.Routes";
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -21,7 +21,7 @@ const options = {
         version: '1.0.0',
       },
     },
-    apis: ['src/routes/Recipes.Routes.ts', 'src/routes/User.Routes.ts'],
+    apis: ['src/routes/mongodb/Recipes.Routes.ts', 'src/routes/User.Routes.ts'],
   };
   
   const swaggerDocs = swaggerJsdoc(options);

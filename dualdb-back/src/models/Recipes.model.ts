@@ -1,16 +1,16 @@
-import { Entity, PrimaryKey, Property} from '@mikro-orm/postgresql';
+import { Entity, PrimaryKey, Property } from '@mikro-orm/postgresql';
 
 @Entity()
 export class Recipes {
-  @PrimaryKey({autoincrement: true})
+  @PrimaryKey({ autoincrement: true })
   id!: number;
 
   @Property()
   title!: string;
 
-  @Property()
-  ingredients!: string;
+  @Property({ type: 'json'})
+  ingredients!: string[];
 
-  @Property()
-  preparationStep!: string;
+  @Property({ type: 'json'})
+  preparationStep!: string[];
 }

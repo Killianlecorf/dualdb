@@ -1,6 +1,8 @@
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
-import Recipe from '../models/mongoDB/Recipes.models';
+import IRecipe from '../models/mongoDB/Recipes.models';
+import { orm } from "../../index";
+import { Recipes } from '../models/Recipes.model';
 
 interface RecipeDetails {
   title: string;
@@ -28,7 +30,7 @@ async function scrapper(): Promise<void> {
       if (err) {
         console.error("Erreur lors de l'écriture du fichier :", err);
       } else {
-        console.log("Données scrapées écrites dans le fichier 'data.json'.");
+        return console.log("Données scrapées écrites dans le fichier 'data.json'.");
       }
     });
   } catch (error) {
@@ -66,25 +68,42 @@ async function scrapeRecipeDetails(recipeUrl: string): Promise<RecipeDetails | n
   }
 }
 
-async function read(): Promise<void> {
-  try {
-    const jsonFile = fs.readFileSync('data.json', 'utf8');
-    const data = JSON.parse(jsonFile);
-    return console.log(data);
-  } catch (error) {
-    console.error('An error occurred while reading JSON:', error);
-  }
-}
-
 async function populate(): Promise<void> {
   try {
     const dataRecipes = fs.readFileSync('data.json', 'utf8');
     const recipes = JSON.parse(dataRecipes);
-    await Recipe.insertMany(recipes);
-    console.log('Base de données peuplée avec succès !');
+    await IRecipe.insertMany(recipes);
+    return console.log('Base de données peuplée avec succès !');
   } catch (error) {
     console.error('Erreur lors du peuplement de la base de données :', error);
   }
 }
 
-export { scrapper, read, populate };
+async function populatePostgres(): Promise<void> {
+  const mikro = await orm;
+  const em = mikro.em.fork();
+
+  try {
+    const dataRecipes = fs.readFileSync('data.json', 'utf8');
+    const recipes: RecipeDetails[] = JSON.parse(dataRecipes);
+
+    for (const recipe of recipes) {
+      const recipeEntity = em.create(Recipes, {
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        preparationStep: recipe.preparationStep,
+      });
+
+      em.persist(recipeEntity);
+    }
+
+    await em.flush();
+    return console.log('Base de données peuplée avec succès !');
+  } catch (error) {
+    return console.error('Erreur lors du peuplement de la base de données :', error);
+  } finally {
+    await mikro.close();
+  }
+}
+
+export { scrapper, populate, populatePostgres };

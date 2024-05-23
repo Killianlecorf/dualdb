@@ -1,14 +1,14 @@
 import express from 'express';
 import { 
-    scrapper, 
-    read, 
-    populate 
+    scrapper,
+    populate,
+    populatePostgres
 } from '../controllers/scrapper.controller';
 
 const router = express.Router();
 
 router.get('/', scrapper);
-router.get('/read', read);
 router.get('/populate', populate);
+router.get('/postgres/populate', populatePostgres);
 
 export default router;
