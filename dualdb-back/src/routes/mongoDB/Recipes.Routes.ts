@@ -1,11 +1,17 @@
 import express from 'express';
-import { getRecipes, getRecipebyId} from '../../controllers/mongoDB/Recipes.controller';
+import { 
+    getRecipes, 
+    getRecipebyId,
+    getRecipeByTitle,
+    getRecipeByIngredients
+} from '../../controllers/mongoDB/Recipes.controller';
 
 const router = express.Router();
 
 router.get('/', getRecipes);
-router.get('/:id', getRecipebyId);
-
+router.get('/id/:id', getRecipebyId);
+router.get('/title', getRecipeByTitle);
+router.get('/ingredients', getRecipeByIngredients);
 
 /**
  * @openapi
