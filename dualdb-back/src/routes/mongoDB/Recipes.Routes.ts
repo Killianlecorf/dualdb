@@ -99,6 +99,96 @@ router.get('/ingredients', getRecipeByIngredients);
  *                   type: string
  */
 
+/**
+ * @openapi
+ * /mongodb/recipes/title:
+ *   get:
+ *     summary: Récupère une recette par titre
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         required: true
+ *         description: Le titre de la recette
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 title:
+ *                   type: string
+ *                 ingredients:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                 instructions:
+ *                   type: string
+ *       400:
+ *         description: Paramètre manquant
+ *       404:
+ *         description: Recette non trouvée
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+
+/**
+ * @openapi
+ * /mongodb/recipes/ingredients:
+ *   get:
+ *     summary: Récupère des recettes par ingrédients
+ *     parameters:
+ *       - in: query
+ *         name: ingredients
+ *         required: true
+ *         description: Les ingrédients de la recette (séparés par des virgules)
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   _id:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   ingredients:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   instructions:
+ *                     type: string
+ *       400:
+ *         description: Paramètre manquant
+ *       404:
+ *         description: Aucune recette trouvée
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+
+/**
+ * @openapi
+ * /scrapper/populate:
+ *   get:
+ *     summary: Peuple la base de données MongoDB avec des recettes à partir d'un fichier JSON.
+ *     description: Lit les données des recettes à partir d'un fichier JSON, les insère dans la base de données MongoDB et retourne un message de succès en cas de réussite.
+ *     responses:
+ *       200:
+ *         description: Base de données peuplée avec succès.
+ *       500:
+ *         description: Erreur interne du serveur lors du peuplement de la base de données.
+ */
 
 /**
  * @openapi
@@ -186,6 +276,106 @@ router.get('/ingredients', getRecipeByIngredients);
  *                   type: string
  */
 
+
+/**
+ * @openapi
+ * /postgres/recipes/name:
+ *   get:
+ *     summary: Récupère une recette par titre
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         required: true
+ *         description: Le titre de la recette
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 title:
+ *                   type: string
+ *                 ingredients:
+ *                   type: string
+ *                 instructions:
+ *                   type: string
+ *       400:
+ *         description: Paramètre manquant
+ *       404:
+ *         description: Recette non trouvée
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+
+/**
+ * @openapi
+ * /postgres/recipes/ingredients:
+ *   get:
+ *     summary: Récupère des recettes par ingrédients
+ *     parameters:
+ *       - in: query
+ *         name: ingredients
+ *         required: true
+ *         description: Les ingrédients de la recette
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Succès
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   title:
+ *                     type: string
+ *                   ingredients:
+ *                     type: string
+ *                   instructions:
+ *                     type: string
+ *       400:
+ *         description: Paramètre manquant
+ *       404:
+ *         description: Aucune recette trouvée
+ *       500:
+ *         description: Erreur interne du serveur
+ */
+
+/**
+ * @openapi
+ * /scrapper/postgres/populate:
+ *   get:
+ *     summary: Peuple la base de données PostgreSQL avec des recettes à partir d'un fichier JSON.
+ *     description: Lit les données des recettes à partir d'un fichier JSON, les insère dans la base de données PostgreSQL et retourne un message de succès en cas de réussite.
+ *     responses:
+ *       200:
+ *         description: Base de données peuplée avec succès.
+ *       500:
+ *         description: Erreur interne du serveur lors du peuplement de la base de données.
+ */
+
+/**
+ * @openapi
+ * /scrapper:
+ *   get:
+ *     summary: Scrappe les recettes de la page de recettes Allrecipes.
+ *     description: Scrappe les détails des recettes (titre, ingrédients, étapes de préparation) à partir d'une page Allrecipes spécifique.
+ *     responses:
+ *       200:
+ *         description: Succès. Les données des recettes sont enregistrées dans un fichier JSON.
+ *       500:
+ *         description: Erreur interne du serveur lors du scraping.
+ */
 
 /**
  * @openapi
