@@ -13,7 +13,7 @@ export async function getRecipes(req: Request, res: Response) {
     return res.json(recipes);
   } catch (error) {
     console.error(error);
-    return res.status(401).json({ message: "Token invalide" });
+    return res.status(401).json({ message: "Erreur lors de la récupération recipes" });
   }
 }
 

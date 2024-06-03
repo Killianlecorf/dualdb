@@ -8,10 +8,8 @@ RUN npm ci
 
 COPY --chown=node:node . .
 
-# RUN npm run migration-up
-
 RUN npm run build
 
 USER node
 
-CMD [ "npm", "start" ]
+CMD ["sh", "-c", "npm run migration-up && npm start"]
