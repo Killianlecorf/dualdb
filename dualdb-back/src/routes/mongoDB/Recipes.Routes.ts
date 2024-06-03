@@ -51,7 +51,7 @@ router.get('/ingredients', getRecipeByIngredients);
 
 /**
  * @openapi
- * /mongodb/recipes/{id}:
+ * /mongodb/recipes/id/{id}:
  *   get:
  *     description: Récupère une recette par son ID.
  *     security:
@@ -228,7 +228,7 @@ router.get('/ingredients', getRecipeByIngredients);
 
 /**
  * @openapi
- * /postgres/recipes/{id}:
+ * /postgres/recipes/id/{id}:
  *   get:
  *     description: Récupère une recette par son ID.
  *     security:
