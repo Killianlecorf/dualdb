@@ -29,8 +29,9 @@ router.get('/ingredients', getRecipeByIngredients);
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Recipe'
- *       401:
- *         description: Token non fourni ou invalide.
+ * 
+ *       404:
+ *         description: Recette non trouvée.
  *         content:
  *           application/json:
  *             schema:
@@ -70,15 +71,6 @@ router.get('/ingredients', getRecipeByIngredients);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Recipe'
- *       401:
- *         description: Token non fourni ou invalide.
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
  *       404:
  *         description: Recette non trouvée.
  *         content:

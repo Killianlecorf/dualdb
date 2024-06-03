@@ -7,6 +7,7 @@ async function databaseConnection() {
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         entities: [Recipes],
+        host: 'localhost',
         port: parseInt(process.env.DB_PORT),
         debug: true,
     });

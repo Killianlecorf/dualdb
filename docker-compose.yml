@@ -1,12 +1,11 @@
+version: '3.8'
+
 services:
-  # Add more containers below (nginx, postgres, etc.)
   dualdb-back:
     container_name: dualdb-back
     build:
       context: ./dualdb-back
       dockerfile: Dockerfile
-
-    # Set envrionment variables based on the .env file
     env_file:
       - dualdb-back/.env
     restart: always
@@ -17,7 +16,7 @@ services:
       - mongodb
 
   dualdb-server:
-    image: postgres
+    image: postgres:latest
     container_name: dualdb
     restart: always
     ports:
@@ -30,7 +29,7 @@ services:
       - dualdb-server:/var/lib/postgresql/data
 
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     container_name: pgadmin4_container
     restart: always
     ports:
@@ -38,18 +37,17 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
       PGADMIN_DEFAULT_PASSWORD: azqswx12
+    depends_on:
+      - dualdb-server
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
   mongodb:
-    image: mongo
+    image: mongo:latest
     container_name: mongodb
     restart: always
     ports:
       - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongodb-data:/data/db
 
