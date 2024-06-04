@@ -13,15 +13,15 @@ import swaggerUi from 'swagger-ui-express';
 
     
 const options = {
-    definition: {
-      openapi: '3.0.0',
-      info: {
-        title: 'Hello World',
-        version: '1.0.0',
-      },
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Hello World',
+      version: '1.0.0',
     },
-    apis: ['src/routes/mongodb/Recipes.Routes.ts', 'src/routes/User.Routes.ts'],
-  };
+  },
+  apis: ['src/routes/mongodb/Recipes.Routes.ts'],
+};
   
   const swaggerDocs = swaggerJsdoc(options);
 
@@ -33,7 +33,7 @@ const initializeServer = async () => {
     app.use(cookieParser());
     app.use(cors({
         origin: [
-            'http://localhost:3000'
+            'http://localhost:5000'
         ],
         credentials: true
     }));
