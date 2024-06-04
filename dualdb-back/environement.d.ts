@@ -7,5 +7,7 @@ declare namespace NodeJS {
         DB_PORT:string,
         JWT_SECRET:string,
         URI_DB:string
+        SUPABASEURL:string
+        SUPABASEKEY:string
     }
 }

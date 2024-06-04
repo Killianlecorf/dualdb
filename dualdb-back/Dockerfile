@@ -12,4 +12,4 @@ RUN npm run build
 
 USER node
 
-CMD ["sh", "-c", "npm run migration-up && npm start"]
+CMD ["npm","start"]
