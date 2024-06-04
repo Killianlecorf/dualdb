@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import databaseConnection from './src/config/connectdatabase';
 import RecipePostgresRoute from "./src/routes/Recipes.Routes";
 import ScrapperRoute from "./src/routes/Scrapper.Routes";
 import RecipeMongoRoute from "./src/routes/mongoDB/Recipes.Routes";
@@ -42,7 +41,6 @@ const initializeServer = async () => {
     app.use(bodyParser.json())
     dotenv.config();
     
-    const orm = await databaseConnection()
     connectDatabaseMongo()
 
     const port = process.env.PORT || 3000;
@@ -59,9 +57,5 @@ const initializeServer = async () => {
         console.log(`Serveur démarré sur le port ${port}`);
     });
     
-    return orm 
 }
-
-const orm = initializeServer()
-
-export { orm }
+initializeServer()

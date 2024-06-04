@@ -11,47 +11,14 @@ services:
     restart: always
     ports:
       - 5000:5000
-    depends_on:
-      - dualdb-server
-      - mongodb
 
-  dualdb-server:
-    image: postgres:latest
-    container_name: dualdb
+  mongo:
+    container_name: mongo
+    image: mongo
     restart: always
-    ports:
-      - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_DB: dualdb
-      POSTGRES_PASSWORD: azqswx12
-    volumes:
-      - dualdb-server:/var/lib/postgresql/data
+      - MONGO_INITDB_ROOT_USERNAME=userAdmin
+      - MONGO_INITDB_ROOT_PASSWORD=userPassword
 
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: pgadmin4_container
-    restart: always
-    ports:
-      - "8888:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: user-name@domain-name.com
-      PGADMIN_DEFAULT_PASSWORD: azqswx12
-    depends_on:
-      - dualdb-server
-    volumes:
-      - pgadmin-data:/var/lib/pgadmin
-
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    restart: always
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb-data:/data/db
-
-volumes:
-  dualdb-server:
-  pgadmin-data:
-  mongodb-data:
+# volumes:
+#   mongodb-data:

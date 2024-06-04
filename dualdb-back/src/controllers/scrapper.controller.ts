@@ -1,8 +1,7 @@
 import { JSDOM } from 'jsdom';
 import fs from 'fs';
 import IRecipe from '../models/mongoDB/Recipes.models';
-import { orm } from "../../index";
-import { Recipes } from '../models/Recipes.model';
+import { createClient } from '@supabase/supabase-js';
 
 interface RecipeDetails {
   title: string;
@@ -79,31 +78,30 @@ async function populate(): Promise<void> {
   }
 }
 
+
 async function populatePostgres(): Promise<void> {
-  const mikro = await orm;
-  const em = mikro.em.fork();
+  const supabase = createClient(process.env.SUPABASEURL, process.env.SUPABASEKEY);
 
   try {
+
+    // Lecture des données du fichier JSON
     const dataRecipes = fs.readFileSync('data.json', 'utf8');
     const recipes: RecipeDetails[] = JSON.parse(dataRecipes);
 
-    for (const recipe of recipes) {
-      const recipeEntity = em.create(Recipes, {
-        title: recipe.title,
-        ingredients: recipe.ingredients,
-        preparationStep: recipe.preparationStep,
-      });
+    // Insertion des données dans la table 'recipes'
+    const { data: recipeData, error: recipeError } = await supabase
+      .from('recipes')
+      .insert(recipes) // Assurez-vous que 'recipes' est un tableau d'objets et non un objet unique
+      .select();
 
-      em.persist(recipeEntity);
+    // Vérification des erreurs d'insertion
+    if (recipeError) {
+      throw recipeError;
     }
 
-    await em.flush();
-    return console.log('Base de données peuplée avec succès !');
+    console.log('Base de données peuplée avec succès !');
   } catch (error) {
-    return console.error('Erreur lors du peuplement de la base de données :', error);
-  } finally {
-    await mikro.close();
+    console.error('Erreur lors du peuplement de la base de données :', error);
   }
 }
-
 export { scrapper, populate, populatePostgres };
